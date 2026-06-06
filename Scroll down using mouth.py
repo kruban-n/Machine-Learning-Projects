@@ -4,13 +4,13 @@ import pyautogui
 import math
 
 # ── Safety ───────────────────────────────────────────────────────
-pyautogui.FAILSAFE = True   # move mouse to corner → emergency stop
+pyautogui.FAILSAFE = True   # move mouse to corner and it triggers emergency stop!
 pyautogui.PAUSE = 0
 
 # ── Scroll settings ──────────────────────────────────────────────
 SCROLL_AMOUNT          = 15       # lines per scroll tick
 SCROLL_COOLDOWN        = 0       # frames to wait between scrolls
-MOUTH_OPEN_THRESHOLD   = 0.2     # mouth aspect ratio to consider "open"
+MOUTH_OPEN_THRESHOLD   = 0.2     # mouth aspect ratio to be considered as "open"
 
 # ── MediaPipe Face Mesh ──────────────────────────────────────────
 mp_face_mesh   = mp.solutions.face_mesh
@@ -22,7 +22,7 @@ cooldown_counter = 0
 with mp_face_mesh.FaceMesh(
     static_image_mode=False,
     max_num_faces=1,
-    refine_landmarks=False,    # set True for more accurate lip landmarks
+    refine_landmarks=False,    # can be set true also for more accurate landmarks
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as face_mesh:
 
@@ -45,13 +45,7 @@ with mp_face_mesh.FaceMesh(
 
         if results.multi_face_landmarks:
             for face_landmarks in results.multi_face_landmarks:
-                # Optionally draw full face mesh (can be slow, comment out if needed)
-                # mp_drawing.draw_landmarks(
-                #     image, face_landmarks, mp_face_mesh.FACEMESH_CONTOURS,
-                #     landmark_drawing_spec=None,
-                #     connection_drawing_spec=drawing_styles.get_default_face_mesh_contours_style())
-
-                # Key mouth landmarks
+    
                 upper_lip = face_landmarks.landmark[13]   # top of upper lip
                 lower_lip = face_landmarks.landmark[14]   # bottom of lower lip
                 left_corner = face_landmarks.landmark[61]  # left corner
@@ -83,7 +77,7 @@ with mp_face_mesh.FaceMesh(
                 cv2.line(image, upper, lower, color, 2)
                 cv2.line(image, left, right, color, 2)
 
-                # Status text
+                # display Status text
                 if mouth_open:
                     status = "MOUTH OPEN - SCROLLING"
                 else:
