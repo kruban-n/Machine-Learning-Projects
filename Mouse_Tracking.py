@@ -4,17 +4,17 @@ import pyautogui
 import math
  
 # ── Safety ───────────────────────────────────────────────────────────────────
-pyautogui.FAILSAFE = True   # move mouse to top-left corner to emergency stop
+pyautogui.FAILSAFE = True   # if mouse is at top left corner,stop immediately
 pyautogui.PAUSE = 0         # no delay for faster response
  
 # ── Screen size ───────────────────────────────────────────────────────────────
 SCREEN_W, SCREEN_H = pyautogui.size()
  
 # ── Tuning ────────────────────────────────────────────────────────────────────
-SMOOTHING  = 5    # 1-10: higher = smoother but more laggy
-CLICK_DIST = 35   # pinch distance in pixels to trigger a click
+SMOOTHING  = 5    # 1-10: the moother it is, the more lag is experienced.
+CLICK_DIST = 35   # the minumum distance to trigger a click
  
-# ── Setup (same as your working code) ────────────────────────────────────────
+
 mp_drawing = mp.solutions.drawing_utils
 mp_hands   = mp.solutions.hands
  
@@ -22,7 +22,7 @@ mp_hands   = mp.solutions.hands
 def distance(lm1, lm2, w, h):
     x1, y1 = int(lm1.x * w), int(lm1.y * h)
     x2, y2 = int(lm2.x * w), int(lm2.y * h)
-    return math.hypot(x2 - x1, y2 - y1)
+    return math.hypot(x2 - x1, y2 - y1) # calculating distance between two landmarks
  
 # ── Smoothing state ───────────────────────────────────────────────────────────
 smooth_x, smooth_y = SCREEN_W // 2, SCREEN_H // 2
