@@ -3,11 +3,11 @@ import mediapipe as mp
 import pyautogui
 
 # ── Safety ───────────────────────────────────────────────────────
-pyautogui.FAILSAFE = True   # corner of screen → emergency stop
+pyautogui.FAILSAFE = True   # if mouse goes to end of the screen, immediately stop
 pyautogui.PAUSE = 0
 
 # ── Scroll settings ──────────────────────────────────────────────
-SCROLL_AMOUNT   = 20      # lines per scroll "tick"
+SCROLL_AMOUNT   = 20      # number of lines to scroll when tick is detected 
 SCROLL_COOLDOWN = 0      # frames to wait between scrolls (adjust for speed)
 
 # ── MediaPipe setup ──────────────────────────────────────────────
